@@ -12,6 +12,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.544.0",
@@ -37,8 +38,8 @@
     "axios-mock-adapter": "^2.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
-    "simple-git-hooks": "^2.13.1",
     "jsdom": "^27.0.0",
+    "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.8",
     "typescript": "^5",

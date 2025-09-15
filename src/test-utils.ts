@@ -1,4 +1,4 @@
-import { User, BaseAuthData } from '@/types';
+import { User, Post, Image, BaseAuthData } from '@/types';
 import { vi } from 'vitest';
 
 export const dates = {
@@ -21,6 +21,55 @@ export const initAuthData: BaseAuthData = {
   backendUrl: 'http://test.com/api/v1',
   token: 'test-token',
   user: author,
+};
+
+export const image: Image = {
+  ...dates,
+  order: 1,
+  ownerId: author.id,
+  owner: { ...author },
+  id: crypto.randomUUID(),
+  src: 'https://example.com/test-image.jpg',
+  mimetype: 'image/jpeg',
+  alt: 'Test image',
+  size: 750000,
+  height: 1080,
+  width: 1920,
+  scale: 1.0,
+  xPos: 0,
+  yPos: 0,
+  info: '',
+};
+
+const postId = crypto.randomUUID();
+
+export const post: Post = {
+  author,
+  ...dates,
+  order: 1,
+  image: image,
+  published: true,
+  title: 'Test Post',
+  id: postId,
+  authorId: author.id,
+  content: 'Just for testing...',
+  tags: [
+    {
+      postId,
+      name: 'Software',
+      id: crypto.randomUUID(),
+    },
+  ],
+  comments: Array.from({ length: 5 }).map((_, i) => ({
+    ...dates,
+    author,
+    postId,
+    order: i + 1,
+    id: crypto.randomUUID(),
+    content: `Test comment #${i + 1}`,
+    authorId: !i ? author.id : crypto.randomUUID(),
+  })),
+  _count: { comments: 5, votes: 5 },
 };
 
 export const mockDialogContext = () => {

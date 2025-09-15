@@ -8,6 +8,20 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function clampNum(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+export function wrapNum(
+  value: number,
+  delta: number,
+  min: number,
+  max: number
+): number {
+  const range = max - min + 1;
+  return ((value - min + delta + range) % range) + min;
+}
+
 export function setURlParams(
   url: string | URL,
   params: Record<string, string>

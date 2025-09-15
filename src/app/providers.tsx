@@ -1,15 +1,23 @@
+import { AuthProvider } from '@/contexts/auth-context';
 import { Toaster } from '@/components/ui/sonner';
 import { Loader } from '@/components/loader';
 import { ThemeProvider } from 'next-themes';
+import { BaseAuthData } from '@/types';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  initAuthData: initAuthData,
+  children,
+}: {
+  initAuthData: BaseAuthData;
+  children: React.ReactNode;
+}) {
   return (
     <ThemeProvider
       enableSystem
       attribute='class'
       defaultTheme='system'
       disableTransitionOnChange>
-      {children}
+      <AuthProvider initAuthData={initAuthData}>{children}</AuthProvider>
       <Toaster
         expand
         richColors

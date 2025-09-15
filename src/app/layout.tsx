@@ -1,6 +1,7 @@
 import './globals.css';
-import type { Metadata } from 'next';
+import { getBaseAuthData } from '@/lib/auth';
 import { Providers } from './providers';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: {
@@ -10,15 +11,19 @@ export const metadata: Metadata = {
   description: 'A front-end web app for viewing blog posts.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const baseAuthData = await getBaseAuthData();
+
   return (
     <html lang='en' suppressHydrationWarning>
       <body>
-        <Providers>{children}</Providers>
+        <Providers initAuthData={baseAuthData}>
+          <div className='container mx-auto px-4'>{children}</div>
+        </Providers>
       </body>
     </html>
   );

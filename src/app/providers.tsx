@@ -1,8 +1,39 @@
+'use client';
+
+import {
+  isServer,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import { AuthProvider } from '@/contexts/auth-context';
 import { Toaster } from '@/components/ui/sonner';
 import { Loader } from '@/components/loader';
 import { ThemeProvider } from 'next-themes';
 import { BaseAuthData } from '@/types';
+
+function makeQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        gcTime: 5 * 60 * 1000, // 5 minutes
+        staleTime: 1 * 60 * 1000, // 1 minute
+        refetchIntervalInBackground: false,
+        refetchOnWindowFocus: true,
+        refetchOnReconnect: true,
+        networkMode: 'online',
+        retry: 1,
+      },
+    },
+  });
+}
+
+let browserQueryClient: QueryClient | undefined;
+
+function getQueryClient() {
+  if (isServer) return makeQueryClient();
+  if (!browserQueryClient) browserQueryClient = makeQueryClient();
+  return browserQueryClient;
+}
 
 export function Providers({
   initAuthData: initAuthData,
@@ -11,13 +42,17 @@ export function Providers({
   initAuthData: BaseAuthData;
   children: React.ReactNode;
 }) {
+  const queryClient = getQueryClient();
+
   return (
     <ThemeProvider
       enableSystem
       attribute='class'
       defaultTheme='system'
       disableTransitionOnChange>
-      <AuthProvider initAuthData={initAuthData}>{children}</AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider initAuthData={initAuthData}>{children}</AuthProvider>
+      </QueryClientProvider>
       <Toaster
         expand
         richColors

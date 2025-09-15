@@ -1,5 +1,6 @@
 import './globals.css';
 import { getBaseAuthData } from '@/lib/auth';
+import { Navbar } from '@/components/navbar';
 import { Providers } from './providers';
 import { Metadata } from 'next';
 
@@ -22,6 +23,7 @@ export default async function RootLayout({
     <html lang='en' suppressHydrationWarning>
       <body>
         <Providers initAuthData={baseAuthData}>
+          <Navbar />
           <div className='container mx-auto px-4'>{children}</div>
         </Providers>
       </body>

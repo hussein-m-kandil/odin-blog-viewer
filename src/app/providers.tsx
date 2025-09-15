@@ -5,6 +5,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+import { DialogProvider } from '@/contexts/dialog-context/';
 import { AuthProvider } from '@/contexts/auth-context';
 import { Toaster } from '@/components/ui/sonner';
 import { Loader } from '@/components/loader';
@@ -51,7 +52,9 @@ export function Providers({
       defaultTheme='system'
       disableTransitionOnChange>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider initAuthData={initAuthData}>{children}</AuthProvider>
+        <AuthProvider initAuthData={initAuthData}>
+          <DialogProvider>{children}</DialogProvider>
+        </AuthProvider>
       </QueryClientProvider>
       <Toaster
         expand

@@ -24,6 +24,9 @@ const unobserve = vi.fn();
 const disconnect = vi.fn();
 const takeRecords = vi.fn();
 const revokeObjectURL = vi.fn();
+const hasPointerCapture = vi.fn();
+const setPointerCapture = vi.fn();
+const releasePointerCapture = vi.fn();
 const createObjectURL = vi.fn(() => 'blob://file.ext');
 
 beforeAll(() => {
@@ -37,6 +40,9 @@ beforeAll(() => {
   );
   URL.createObjectURL = createObjectURL;
   URL.revokeObjectURL = revokeObjectURL;
+  HTMLElement.prototype.hasPointerCapture = hasPointerCapture;
+  HTMLElement.prototype.setPointerCapture = setPointerCapture;
+  HTMLElement.prototype.releasePointerCapture = releasePointerCapture;
 });
 
 beforeEach(() => {
@@ -46,6 +52,9 @@ beforeEach(() => {
 
 afterEach(() => {
   Object.values(nextRouterMock).forEach((mockFn) => mockFn.mockReset());
+  releasePointerCapture.mockReset();
+  hasPointerCapture.mockReset();
+  setPointerCapture.mockReset();
   resetIntersectionMocking();
   createObjectURL.mockReset();
   revokeObjectURL.mockReset();

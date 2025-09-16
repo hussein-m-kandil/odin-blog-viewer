@@ -14,10 +14,15 @@ const nextRouterMock = vi.hoisted(() => ({
   prefetch: vi.fn(),
   back: vi.fn(),
 }));
-vi.mock('next/navigation', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('next/navigation')>()),
-  useRouter: () => nextRouterMock,
-}));
+vi.mock('next/navigation', async (importOriginal) => {
+  const url = new URL(window.location.href);
+  return {
+    ...(await importOriginal<typeof import('next/navigation')>()),
+    useSearchParams: () => url.searchParams,
+    usePathname: () => url.pathname,
+    useRouter: () => nextRouterMock,
+  };
+});
 
 const observe = vi.fn();
 const unobserve = vi.fn();

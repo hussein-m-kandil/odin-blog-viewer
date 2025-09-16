@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import { Home, LogIn, UserPlus, UserIcon } from 'lucide-react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useAuthData } from '@/contexts/auth-context';
 import { UserAvatar } from '@/components/user-avatar';
 import { ModeToggle } from '@/components/mode-toggle';
@@ -27,6 +28,12 @@ export function Navbar() {
   const [visible, setVisible] = React.useState(true);
   const { authData } = useAuthData();
   const { user } = authData;
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const url = `${pathname}${searchParams.size ? '?' : ''}${searchParams}`;
+  const encodedURL = encodeURIComponent(url);
 
   const containerRef = React.useRef<HTMLDivElement>(null);
   const scrollYRef = React.useRef(0);
@@ -108,12 +115,12 @@ export function Navbar() {
                       ) : (
                         <>
                           <CustomMenuItem>
-                            <Link href='/signup'>
+                            <Link href={`/signup?url=${encodedURL}`}>
                               <UserPlus /> Sign up
                             </Link>
                           </CustomMenuItem>
                           <CustomMenuItem>
-                            <Link href='/signin'>
+                            <Link href={`/signin?url=${encodedURL}`}>
                               <LogIn />
                               Sign in
                             </Link>

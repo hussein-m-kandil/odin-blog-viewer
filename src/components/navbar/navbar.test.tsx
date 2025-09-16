@@ -56,14 +56,14 @@ describe('<Navbar/>', () => {
     expect(screen.queryByRole('menuitem', { name: /home/i })).toBeNull();
     expect(screen.queryByRole('menuitem', { name: /profile/i })).toBeNull();
     expect(screen.queryByRole('menuitem', { name: /sign ?out/i })).toBeNull();
-    expect(screen.getByRole('menuitem', { name: /sign ?in/i })).toHaveAttribute(
-      'href',
-      '/signin'
-    );
-    expect(screen.getByRole('menuitem', { name: /sign ?up/i })).toHaveAttribute(
-      'href',
-      '/signup'
-    );
+    expect(
+      (screen.getByRole('menuitem', { name: /sign ?in/i }) as HTMLAnchorElement)
+        .href
+    ).toMatch(/\/signin\/?/);
+    expect(
+      (screen.getByRole('menuitem', { name: /sign ?up/i }) as HTMLAnchorElement)
+        .href
+    ).toMatch(/\/signup\/?/);
   });
 
   it('should render an authenticated user options menu after clicking the avatar', async () => {

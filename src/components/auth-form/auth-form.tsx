@@ -98,7 +98,9 @@ export function AuthForm({
     if (isUpdate && data.user) {
       router.replace(`/profile/${data.user.username}`);
     } else {
-      router.push('/');
+      const currentUrl = new URL(window.location.href);
+      const redirectUrl = currentUrl.searchParams?.get('url');
+      router.push(redirectUrl || '/');
     }
   };
 

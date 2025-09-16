@@ -48,11 +48,6 @@ export function AuthForm({
   const isSignin = formType === 'signin';
   const isSignup = formType === 'signup';
 
-  React.useEffect(() => {
-    // Prevent displaying auth form for an authenticated user
-    if (!isUpdate && user) router.replace('/');
-  }, [isUpdate, router, user]);
-
   let formData: {
     props: {
       submitterLabel: DynamicFormProps['submitterLabel'];

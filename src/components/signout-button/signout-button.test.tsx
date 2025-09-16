@@ -114,7 +114,7 @@ describe('<SignoutButton />', async () => {
     render(<SignoutButtonWrapper />);
     await user.click(screen.getByRole('button'));
     await waitForElementToBeRemoved(() => screen.getByText(/signing out/i));
-    expect(replaceRouteMock).toHaveBeenCalledExactlyOnceWith('/signin');
+    expect(replaceRouteMock).toHaveBeenCalledExactlyOnceWith('/');
     expect(screen.getByText(/bye/i)).toBeInTheDocument();
     expect(axiosMock.history.post).toHaveLength(1);
     expect(signoutMock).toHaveBeenCalledOnce();

@@ -29,7 +29,7 @@ export function SignoutButton({
       loading: 'Signing out...',
       success: () => {
         signout();
-        router.replace('/signin');
+        router.replace('/');
         return {
           message: `Bye, ${user.username}`,
           description: 'You have signed out successfully',

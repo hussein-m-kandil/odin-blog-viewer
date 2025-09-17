@@ -1,4 +1,5 @@
 import {
+  act,
   render,
   screen,
   waitFor,
@@ -59,8 +60,8 @@ describe('<CommentForm />', () => {
     expect(screen.getByRole('textbox', { name: /comment/i })).not.toHaveFocus();
   });
 
-  it('should render an update comment form', () => {
-    render(<CommentFormWrapper {...updateCommentProps} />);
+  it('should render an update comment form', async () => {
+    await act(() => render(<CommentFormWrapper {...updateCommentProps} />));
     const submitter = screen.getByRole('button', {
       name: /update/i,
     }) as HTMLButtonElement;

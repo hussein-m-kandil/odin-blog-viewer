@@ -1,5 +1,7 @@
 # [Odin Blog Viewer](https://odin-blog-viewer.hussein-kandil.vercel.app/)
 
+![A screenshot of the app's home page showing blog posts with their images, titles, contents, tags, and more.](./screenshot_2025-09-17.png)
+
 A **blog viewing app** built as part of the required projects at [The Odin Project Node.js course](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs).
 
 **The course requirements for this project are divided into 3 pieces**:
@@ -119,7 +121,7 @@ While building this project, I faced several challenges, such as:
    ```bash
    git clone https://github.com/hussein-m-kandil/odin-blog-viewer.git
    cd odin-blog-viewer
-   npm ci
+   npm install
    cp env.sample .env
    cp env.sample .env.test
    npm run test -- --run

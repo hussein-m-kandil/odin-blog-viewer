@@ -18,12 +18,12 @@ import {
 } from './auth-form.data';
 import { cn, parseAxiosAPIError, getUnknownErrorMessage } from '@/lib/utils';
 import { LogIn, UserPen, UserPlus, UserCheck } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { CloseButton } from '@/components/close-button';
 import { useAuthData } from '@/contexts/auth-context';
 import { Separator } from '@/components/ui/separator';
 import { AuthFormProps } from './auth-form.types';
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
 import { AxiosRequestConfig } from 'axios';
 import { AuthResData } from '@/types';
 import { toast } from 'sonner';
@@ -36,6 +36,7 @@ export function AuthForm({
   onClose,
 }: AuthFormProps) {
   const [submitting, setSubmitting] = React.useState(false);
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const {
@@ -94,11 +95,13 @@ export function AuthForm({
     signin(data);
     onSuccess?.();
     if (isUpdate && data.user) {
-      router.replace(`/profile/${data.user.username}`);
+      const redirectUrl = `/profile/${data.user.username}`;
+      router.replace(redirectUrl);
+      router.replace(redirectUrl);
     } else {
-      const currentUrl = new URL(window.location.href);
-      const redirectUrl = currentUrl.searchParams?.get('url');
-      router.push(redirectUrl || '/');
+      const redirectUrl = decodeURIComponent(searchParams.get('url') || '/');
+      router.replace(redirectUrl);
+      router.push(redirectUrl); // To be sure that the redirection happen
     }
   };
 
@@ -192,7 +195,9 @@ export function AuthForm({
             <Link
               tabIndex={submitting ? -1 : 0}
               onClick={preventDefaultIfSubmitting}
-              href={isSignin ? '/signup' : '/signin'}
+              href={`${isSignin ? '/signup' : '/signin'}${
+                searchParams.size ? '?' + searchParams.toString() : ''
+              }`}
               className={cn(
                 submitting && 'opacity-50 pointer-events-none',
                 'p-0'

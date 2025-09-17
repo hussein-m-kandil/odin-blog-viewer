@@ -40,7 +40,6 @@ export function AuthForm({
 
   const {
     authData: { authAxios, authUrl, user },
-    signout,
     signin,
   } = useAuthData();
 
@@ -88,7 +87,6 @@ export function AuthForm({
       reqConfig: { url: `/users/${user.id}`, method: 'patch' },
     };
   } else {
-    signout();
     throw Error('Invalid `AuthForm` usage');
   }
 

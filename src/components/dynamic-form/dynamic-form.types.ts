@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { UseFormReturn, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -12,10 +13,7 @@ export interface DynamicFormFieldAttrs {
 
 export type DynamicFormAttrs = Record<string, DynamicFormFieldAttrs>;
 
-export type DynamicFormSchema = z.ZodSchema<
-  Record<string, unknown>,
-  Record<string, unknown>
->;
+export type DynamicFormSchema = z.ZodSchema<any, any>;
 
 export type DynamicFormSubmitHandler<T> = (
   hookForm: UseFormReturn,
@@ -29,7 +27,7 @@ export type SubmitterLabel = {
 
 export interface DynamicFormProps
   extends Omit<React.ComponentProps<'form'>, 'onSubmit'> {
-  onSubmit: DynamicFormSubmitHandler<Record<string, unknown>>;
+  onSubmit: DynamicFormSubmitHandler<any>;
   hookFormRef?: React.Ref<UseFormReturn>;
   submitterIcon?: React.ReactNode;
   submitterLabel?: SubmitterLabel;
